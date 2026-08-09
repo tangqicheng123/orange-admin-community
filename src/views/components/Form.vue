@@ -65,7 +65,7 @@
             <el-rate v-model="form.score" />
           </el-form-item>
         </el-col>
-        <el-col :xs="24">
+        <el-col :xs="24" :sm="12">
           <el-form-item :label="t('component.formLevel')" prop="level">
             <el-slider v-model="form.level" :marks="levelMarks" />
           </el-form-item>
