@@ -19,9 +19,9 @@
             @dragover.prevent="onDragOver($event, tab)"
             @dragend="onDragEnd"
           >
-            {{ displayTitle(tab.title) }}
+            <span class="tab-title">{{ displayTitle(tab.title) }}</span>
             <el-icon
-              v-if="!isAffix(tab)"
+              v-show="!isAffix(tab)"
               class="close"
               @click.stop="closeTab(tab)"
             >
@@ -263,6 +263,7 @@ onBeforeUnmount(() => {
 .tabs-view {
   position: relative;
   height: 42px;
+  flex-shrink: 0; /* 防止被相邻 el-main 在 flex column 中压扁 */
   border-bottom: 1px solid var(--el-border-color-light);
   background: var(--el-bg-color);
   display: flex;
@@ -295,6 +296,33 @@ onBeforeUnmount(() => {
   padding: 0 12px;
   white-space: nowrap;
   height: 100%;
+}
+/* 移动端紧凑适配（与 Pro 同步）：文字包 .tab-title 才能省略号；隐藏 close */
+@media (max-width: 992px) {
+  .tabs-view {
+    height: 40px;
+  }
+  .tabs {
+    padding: 0 8px;
+    gap: 4px;
+  }
+  .tab-item {
+    padding: 4px 8px;
+    font-size: 12px;
+    gap: 0;
+    line-height: 1.4;
+  }
+  .tab-title {
+    display: block;
+    max-width: 72px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    line-height: 1.4;
+  }
+  .tab-item :deep(.close) {
+    display: none;
+  }
 }
 .tab-item {
   display: inline-flex;

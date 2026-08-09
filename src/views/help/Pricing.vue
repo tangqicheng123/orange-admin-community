@@ -13,9 +13,10 @@
 
     <!-- 三档授权卡片 -->
     <el-row :gutter="16" class="plan-row">
-      <el-col v-for="(p, i) in plans" :key="p.name" :xs="24" :sm="8">
+      <el-col v-for="(p, i) in plans" :key="p.name" :xs="24" :sm="8" class="plan-col">
+        <!-- 推荐徽章放 el-card 外部（el-card 自带 overflow:hidden 会把外露部分切掉） -->
+        <div v-if="i === 1" class="badge">{{ t('help.planBusiness') }}</div>
         <el-card class="plan-card" :class="{ featured: i === 1 }" shadow="hover">
-          <div v-if="i === 1" class="badge">{{ t('help.planBusiness') }}</div>
           <h3 class="plan-name">{{ p.name }}</h3>
           <div class="plan-price">{{ p.price }}</div>
           <p class="plan-desc">{{ p.desc }}</p>
@@ -208,6 +209,9 @@ const rows = computed(() => {
 .plan-row {
   margin-bottom: 16px;
 }
+.plan-col {
+  position: relative; /* 锚点给 .badge 绝对定位 */
+}
 .plan-card {
   position: relative;
   text-align: center;
@@ -227,6 +231,7 @@ const rows = computed(() => {
   padding: 2px 10px;
   border-radius: 10px;
   white-space: nowrap;
+  z-index: 1; /* 浮在卡片之上，避免被 el-card overflow 裁切 */
 }
 .plan-name {
   font-size: 17px;
@@ -243,6 +248,10 @@ const rows = computed(() => {
   font-size: 13px;
   min-height: 42px;
   margin: 0 0 4px;
+  line-height: 1.6;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+  text-align: left;
 }
 .plan-btn {
   width: 100%;
