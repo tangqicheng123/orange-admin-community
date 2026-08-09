@@ -1,0 +1,50 @@
+# 依赖
+node_modules
+.pnp
+.pnp.js
+
+# 构建产物
+dist
+dist-ssr
+*.local
+
+# 自动生成的类型声明（由 unplugin 生成）
+src/auto-imports.d.ts
+src/components.d.ts
+.eslintrc-auto-import.json
+
+# 日志
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Vite 运行临时文件
+vite.config.ts.timestamp-*.mjs
+
+# vite-plugin-mock 运行时生成的 bundled 临时文件
+src/mock/*.bundled*.mjs
+
+# smoke 测试临时脚本
+scripts/.smoke-*.mjs
+
+# Playwright 录屏/截图产物（验证用，不入仓）
+scripts/ui-shots
+
+# 编辑器 / 系统
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# 社区版仓库不需要的部署/营销/开发工具文件
+docs/
+deploy/
+landing.html
+public/__dev-tools.html
+EULA.md

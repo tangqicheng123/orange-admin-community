@@ -1,0 +1,59 @@
+{
+  "name": "orange-admin",
+  "version": "0.1.0",
+  "description": "OrangeAdmin（橙枢）—— 基于 Vue3 + TypeScript + Element Plus 的可售卖后台管理模板（纯前端 + Mock，合规可售）",
+  "author": "唐少",
+  "license": "SEE LICENSE IN LICENSE",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "cross-env NODE_OPTIONS=--max-old-space-size=4096 vite",
+    "build": "cross-env NODE_OPTIONS=--max-old-space-size=4096 vue-tsc --noEmit && cross-env NODE_OPTIONS=--max-old-space-size=4096 vite build",
+    "preview": "vite preview",
+    "type-check": "vue-tsc --noEmit",
+    "lint": "eslint . --ext .vue,.js,.ts,.cjs,.mjs --fix",
+    "format": "prettier --write \"src/**/*.{vue,ts,js,css}\"",
+    "clean:cache": "node scripts/clean-cache.mjs",
+    "smoke": "node scripts/smoke-mock.mjs",
+    "license:check": "node scripts/check-licenses.mjs",
+    "license:gen": "node scripts/gen-licenses-md.mjs",
+    "i18n:check": "node scripts/check-i18n.mjs"
+  },
+  "dependencies": {
+    "@element-plus/icons-vue": "^2.3.1",
+    "axios": "^1.7.9",
+    "echarts": "^5.6.0",
+    "element-plus": "^2.9.1",
+    "pinia": "^2.2.6",
+    "vue": "^3.5.13",
+    "vue-i18n": "^9.14.4",
+    "vue-router": "^4.4.5"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.1",
+    "@typescript-eslint/eslint-plugin": "^8.18.0",
+    "@typescript-eslint/parser": "^8.18.0",
+    "@vitejs/plugin-vue": "^5.2.4",
+    "cross-env": "^10.1.0",
+    "eslint": "^8.57.1",
+    "eslint-plugin-vue": "^9.32.0",
+    "mockjs": "^1.1.0",
+    "prettier": "^3.4.2",
+    "stylelint": "^16.11.0",
+    "stylelint-config-recommended-vue": "^1.5.0",
+    "stylelint-config-standard": "^36.0.1",
+    "typescript": "^5.6.3",
+    "unplugin-auto-import": "^0.18.6",
+    "unplugin-vue-components": "^0.27.5",
+    "vite": "^5.4.11",
+    "vite-plugin-mock": "^3.0.2",
+    "vite-plugin-static-copy": "^1.0.6",
+    "vue-tsc": "^2.1.10"
+  },
+  "overrides": {
+    "esbuild": "^0.25.0"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
