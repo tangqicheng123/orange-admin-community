@@ -2,6 +2,26 @@
 
 社区版与 Pro 同步至功能基线 v1.0.0，差异仅在**锁定项**（不含移动端响应式与多语言，且禁止商业用途）。
 
+## [1.1.2] — 2026-08-10（ProTable v-for 列渲染回归修复 · 社区版同步修复）
+
+用量告警（以及所有用 ProTable 的 AI 列表页）出现「只剩 2 列（启用 + 操作）」的渲染回归的修复。
+
+### 🐛 修复
+- **ProTable 动态列渲染回归**：原 `<el-table-column v-for>` 内嵌 `<template v-if="col.slot" #default="{ row }"><slot :name="col.slot" :row="row"/></template>` 时，Vue 3 在 v-for + v-slot 组合下会把 `col` 闭包「串味」——只有最后一个 v-for 迭代的具名插槽能解析到父级 `#metric`/`#channel`/...，其余列 cell 渲染为空 → Element Plus `el-table` 收不到 cell → 整列不注册到 store，header/body 全无（实测 `hidden-columns` 7 个 div 中前 5 个为空）。
+  - **修复**：把每列抽成 `src/components/ProTableColumn.ts` 子组件，`col` 作为组件 prop 下传（每个实例一份稳定值，不再是 v-for 闭包变量），用 render 函数 `h(ElTableColumn, props, { default })` 渲染：default 插槽里若 `col.slot` 命中父级同名插槽就调用（通过 `:slots="$slots"` 传下去），否则回退 `row[col.prop]`（保留 `formatter` 支持）。`index`/`action` 列保持原状。
+  - **类型**：ProTable 用 `defineSlots<{ [name: string]: (props: { row: T }) => any }>()` 开放具名插槽，避免 `:slots="$slots"` 收窄后父级 `#metric` 等报错。
+
+### 🔄 社区版本次同步
+- **本修复仅影响 Pro 版**：`ProTable` 为 Pro 版内部组件（`src/components/ProTable.vue`），社区版不包含 `src/components/` 目录，AI 列表页若呈现走原生 `el-table` 或 `src/views/components/Table.vue`，无此 bug，**无需源码同步**。
+- 仅在 Pro 版 `dist` 与 GitHub Pages 演示站（`orange-admin-demo`）生效；社区版功能基线不受影响。
+
+### 验证
+- TypeScript 0 错；`vite build` 通过；dev + preview 双端口 Playwright 验证：
+  - Alerts 7 列（`#` / 名称 / 指标 / 阈值 / 通知方式 / 启用 / 操作）
+  - ApiKeys 9 列（含 `formatter`：`quota: 1,000,000`）
+  - Knowledge 8 列 · Logs 11 列 · Models 8 列
+  - 0 console error。
+
 ## [1.1.1] — 2026-08-10（Pro 视觉打磨补丁 · 社区版同步展示层）
 
 登录页 5 大卖点 tag 替换 + 侧栏 logo 区视觉打磨。
