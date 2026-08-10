@@ -53,7 +53,7 @@ npm run dev
 ## 🌐 在线体验（完整 Demo）
 
 想先看效果？这里有已部署的完整演示（含移动端/多语言）：
-👉 https://tangqicheng123.github.io/orange-admin-demo/
+👉 https://tqc-dev.github.io/orange-admin-demo/
 
 ## 🔓 升级 Pro 商业版（接单党必选）
 
