@@ -21,7 +21,7 @@ const genOption = (): EChartsOption => {
   return {
     color: [color],
     tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
-    grid: { left: 44, right: 20, top: 24, bottom: 30 },
+    grid: { left: 60, right: 20, top: 28, bottom: 30, containLabel: true },
     xAxis: {
       type: 'category',
       data: [t('charts.catElectronics'), t('charts.catApparel'), t('charts.catFood'), t('charts.catHome'), t('charts.catBeauty'), t('charts.catBooks')],
@@ -31,7 +31,9 @@ const genOption = (): EChartsOption => {
     yAxis: {
       type: 'value',
       name: t('charts.salesUnit'),
-      nameTextStyle: { color: textColor },
+      nameLocation: 'end',
+      nameGap: 8,
+      nameTextStyle: { color: textColor, align: 'right', padding: [0, 0, 0, 0] },
       axisLabel: { color: textColor },
       splitLine: { lineStyle: { color: splitColor } },
     },

@@ -176,7 +176,7 @@ export default {
     formUsername: '用户名',
     formUsernamePh: '3-16 位字符',
     formEmail: '邮箱',
-    formEmailPh: 'name@example.com',
+    formEmailPh: '请输入邮箱地址',
     formRole: '角色',
     formRolePh: '请选择角色',
     formDept: '部门',

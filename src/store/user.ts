@@ -5,9 +5,21 @@ import { login as loginApi, getUserInfo as getUserInfoApi, logout as logoutApi }
 import { setToken, removeToken, getToken } from '@/utils/auth'
 import type { LoginParams, UserInfo } from '@/types/user'
 
+const AVATAR_KEY = 'orange-admin-avatar'
+
 export const useUserStore = defineStore('user', () => {
   const token = ref(getToken())
   const userInfo = ref<UserInfo | null>(null)
+
+  // 用户头像：mock 接口返回空串，本地用户上传/裁剪后的头像用 localStorage 持久化，跨刷新保留
+  const avatar = ref(localStorage.getItem(AVATAR_KEY) || '')
+  function setAvatar(dataUrl: string) {
+    avatar.value = dataUrl
+    if (dataUrl) localStorage.setItem(AVATAR_KEY, dataUrl)
+    else localStorage.removeItem(AVATAR_KEY)
+    // 同步到 userInfo，便于其他地方（mock 返回的字段）读到一致值
+    if (userInfo.value) userInfo.value = { ...userInfo.value, avatar: dataUrl }
+  }
 
   const roles = computed(() => userInfo.value?.roles || [])
   const permissions = computed(() => userInfo.value?.permissions || [])
@@ -22,6 +34,8 @@ export const useUserStore = defineStore('user', () => {
 
   async function fetchUserInfo() {
     userInfo.value = await getUserInfoApi()
+    // 拉取后若本地已有头像，覆盖 mock 返回的空 avatar
+    if (avatar.value) userInfo.value = { ...userInfo.value, avatar: avatar.value }
     return userInfo.value
   }
 
@@ -53,5 +67,5 @@ export const useUserStore = defineStore('user', () => {
     userInfo.value = null
   }
 
-  return { token, userInfo, roles, permissions, menuPermissions, login, fetchUserInfo, hasPermission, setMenuPermissions, logout }
+  return { token, userInfo, avatar, roles, permissions, menuPermissions, login, fetchUserInfo, setAvatar, hasPermission, setMenuPermissions, logout }
 })

@@ -171,4 +171,10 @@ function resetForm() {
 .form {
   max-width: 920px;
 }
+/* el-slider 的 marks 文字（低/中/高）absolute 定位、溢出容器底部约 20px 且不占布局空间，
+   导致与下一行字段视觉贴太近。border-box 下 padding 不撑高，故用 margin-bottom（加到盒子外、
+   并与 el-form-item 的 margin 折叠取大值）把下一行推开，留出清晰间距。 */
+.form :deep(.el-slider) {
+  margin-bottom: 32px;
+}
 </style>

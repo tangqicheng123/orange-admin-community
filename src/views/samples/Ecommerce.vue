@@ -61,18 +61,14 @@
         <el-table-column prop="time" :label="t('samples.ecomColTime')" width="150" />
       </el-table>
 
-      <div class="pager">
-        <el-pagination
-          v-model:current-page="query.page"
-          v-model:page-size="query.pageSize"
-          :total="total"
-          :page-sizes="[10, 20, 50]"
-          layout="total, sizes, prev, pager, next, jumper"
-          background
-          @current-change="loadData"
-          @size-change="loadData"
-        />
-      </div>
+      <PagePager
+        v-model:current-page="query.page"
+        v-model:page-size="query.pageSize"
+        :total="total"
+        :page-sizes="[10, 20, 50]"
+        @current-change="loadData"
+        @size-change="loadData"
+      />
     </el-card>
   </div>
 </template>
@@ -81,6 +77,7 @@
 import { onMounted, reactive, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { get } from '@/utils/request'
+import PagePager from '@/components/PagePager.vue'
 
 interface OrderRow {
   id: number
@@ -167,10 +164,5 @@ onMounted(loadData)
   flex-wrap: wrap;
   gap: 10px;
   margin-bottom: 14px;
-}
-.pager {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 14px;
 }
 </style>

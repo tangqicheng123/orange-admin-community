@@ -81,7 +81,9 @@ export const useAppStore = defineStore('app', () => {
     localStorage.setItem('orange-admin-dark', isDark.value ? '1' : '0')
   }
 
-  function setThemeColor(color: string) {
+  // 仅应用主题色（实时改 CSS 变量 + 内存值），不落盘。
+  // 取色盘拖动时用，避免每帧都写 localStorage 造成卡顿。
+  function applyThemeColor(color: string) {
     themeColor.value = color
     const el = document.documentElement
     el.style.setProperty('--el-color-primary', color)
@@ -89,6 +91,11 @@ export const useAppStore = defineStore('app', () => {
       el.style.setProperty(`--el-color-primary-light-${i}`, mix('#ffffff', color, i * 0.1))
     }
     el.style.setProperty('--el-color-primary-dark-2', mix('#000000', color, 0.2))
+  }
+
+  // 确认主题色：应用并持久化（取色器松手/关闭、点预设色时调用）。
+  function setThemeColor(color: string) {
+    applyThemeColor(color)
     localStorage.setItem('orange-admin-color', color)
   }
 
@@ -161,6 +168,7 @@ export const useAppStore = defineStore('app', () => {
     elLocale,
     toggleSidebar,
     toggleDark,
+    applyThemeColor,
     setThemeColor,
     setLocale,
     addVisitedView,

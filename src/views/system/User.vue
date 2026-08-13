@@ -55,18 +55,14 @@
       </el-table-column>
     </el-table>
 
-    <div class="pager">
-      <el-pagination
-        v-model:current-page="query.page"
-        v-model:page-size="query.pageSize"
-        :total="total"
-        :page-sizes="[10, 20, 50]"
-        layout="total, sizes, prev, pager, next, jumper"
-        background
-        @current-change="loadData"
-        @size-change="loadData"
-      />
-    </div>
+    <PagePager
+      v-model:current-page="query.page"
+      v-model:page-size="query.pageSize"
+      :total="total"
+      :page-sizes="[10, 20, 50]"
+      @current-change="loadData"
+      @size-change="loadData"
+    />
 
     <!-- 新增 / 编辑 弹窗 -->
     <el-dialog v-model="dialogVisible" :title="dialogType === 'add' ? t('user.addUserTitle') : t('user.editUserTitle')" width="520px" @closed="resetForm">
@@ -114,6 +110,7 @@ import { useI18n } from 'vue-i18n'
 import { ElMessage, ElMessageBox, type FormInstance, type FormRules } from 'element-plus'
 import { get, post, put, del } from '@/utils/request'
 import { useUserStore } from '@/store/user'
+import PagePager from '@/components/PagePager.vue'
 
 interface UserRow {
   id: number
@@ -258,10 +255,5 @@ onMounted(() => {
 }
 .toolbar .spacer {
   flex: 1;
-}
-.pager {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 16px;
 }
 </style>
